@@ -3,37 +3,32 @@ var config = require('../config/config');
 
 var instagramHandler = {};
 
-ig.use({
-  client_id: config.ig.clientId,
-  client_secret: config.ig.clientSecret
-});
-
-var redirect_uri = 'http://plslike.me/instagram/callback';
+ig.use({ client_id: config.ig.clientId, client_secret: config.ig.clientSecret });
 
 instagramHandler.auth = function(req, res) {
-  res.redirect(ig.get_authorization_url(redirect_uri, { scope: ['likes'], state: 'a state' }));
+    res.redirect(ig.get_authorization_url(config.ig.redirectUri;, { scope: ['likes'], state: 'a state' }));
 };
 
 instagramHandler.callback = function(req, res) {
-  ig.authorize_user(req.query.code, redirect_uri, function(err, result) {
+    ig.authorize_user(req.query.code, config.ig.redirectUri;, function(err, result) {
     if (err) {
-      console.log(err.body);
-      res.send("Didn't work");
+        console.log(err.body);
+        res.send("Didn't work");
     } else {
-      console.log('Yay! Access token is ' + result.access_token);
-      res.send('Yay! Access token is ' + result.access_token);
+        ig.use({ access_token: result.access_token });
+
+        console.log('Yay! Access token is ' + result.access_token);
+        res.send('Yay! Access token is ' + result.access_token);
     }
   });
 };
 
-//
-// instagramHandler.loginUser = function(access, client, secret) {
-//     ig.use({ access_token: access });
-// }
-//
-// instagramHandler.isPublic = function() {
-// }
-//
+instagramHandler.userInfo function(req, res) {
+    ig.user('self', function(err, result, remaining, limit) {
+        res.send(result);
+    });
+}
+
 // instagramHandler.getFollowers = function() {
 //     return ig.user_followers('self', function(err, users, pagination, remaining, limit) {});
 // }

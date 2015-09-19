@@ -7,6 +7,7 @@ config.clarifai = {};
 
 config.ig.clientId = '08e1824640d941cbbe89670b6ea99579';
 config.ig.clientSecret = '71d1963903d443b6a3f58935e6469b8d';
+config.ig.redirectUri = 'http://plslike.me/instagram/callback';
 
 config.parse.applicationId = 'JbKjS5vCcu4rzuQAEJlXafeBJuA3rhMXq82xiKyN';
 config.parse.javascriptKey = 'PnyvKOrEmngMeKRSKlKNiBxkw0lHeYySp0sgTckJ';
