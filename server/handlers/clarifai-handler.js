@@ -1,4 +1,4 @@
-var Clarifai = require('./clarifai_node.js');
+var Clarifai = require('../vendor/clarifai_node.js');
 var stdio = require('stdio');
 var config = require('../config/config');
 
