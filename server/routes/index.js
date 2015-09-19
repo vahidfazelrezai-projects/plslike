@@ -12,12 +12,12 @@ var testHandler = require('../handlers/test-handler');
 
 // test
 router.get('/test', testHandler.test);
+router.get('/clarifaitest', clarifaiHandler.test);
+router.get('/instagramtest', instagramHandler.test);
 
 // instagram auth flow
 router.get('/instagram/auth', instagramHandler.auth);
 router.get('/instagram/callback', instagramHandler.callback);
-router.get('/instagram/userinfo', function (res, req) {instagramHandler.userInfo(res.send)});
-router.get('/instagram/getfollowers', function (res, req) {instagramHandler.getFollowers(res.send)});
 
 // views
 router.get('/*', viewHandler.index);

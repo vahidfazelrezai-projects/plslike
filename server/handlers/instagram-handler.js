@@ -3,12 +3,15 @@ var config = require('../config/config');
 
 var instagramHandler = {};
 
+// use client keys if no access token
 ig.use({ client_id: config.ig.clientId, client_secret: config.ig.clientSecret });
 
+// redirect to instagram auth endpoint
 instagramHandler.auth = function(req, res) {
     res.redirect(ig.get_authorization_url(config.ig.redirectUri, { scope: ['likes'], state: 'a state' }));
 };
 
+// handle instagram auth callback by using access token
 instagramHandler.callback = function(req, res) {
     ig.authorize_user(req.query.code, config.ig.redirectUri, function(err, result) {
     if (err) {
@@ -23,36 +26,44 @@ instagramHandler.callback = function(req, res) {
   });
 };
 
-instagramHandler.userInfo = function(callback) {
-    ig.user('self', function(err, result, remaining, limit) {
+// run callback on info for user_id (or 'self')
+instagramHandler.userInfo = function(user_id, callback) {
+    ig.user(user_id, function(err, result, remaining, limit) {
         callback(result);
     });
 }
 
-instagramHandler.getFollowers = function(callback) {
-    ig.user_followers('self', function(err, users, pagination, remaining, limit) {
+// run callback on list of users (followers) for user_id (or 'self')
+instagramHandler.getFollowers = function(user_id, callback) {
+    ig.user_followers(user_id, function(err, users, pagination, remaining, limit) {
         callback(users);
     });
 }
 
+// run callback on list of users (follows) for user_id (or 'self')
+instagramHandler.getFollows = function(user_id, callback) {
+    ig.user_follows(user_id, function(err, users, pagination, remaining, limit) {
+        callback(users);
+    });
+}
 
-//
-// instagramHandler.getFollowees = function(user_id) {
-//     return ig.user_follows(user_id, function(err, users, pagination, remaining, limit) {});
-// }
-//
-// instagramHandler.getPictureIDs = function(user_id) {
-//     return ig.user_media_recent(user_id, [100] function(err, medias, pagination, remaining, limit) {});
-//
-// }
-//
-// instagramHandler.getPicture = function(media_id) {
-//     return ig.media(media_id, function(err, media, remaining, limit) {});
-// }
-//
-// instagramHandler.checkLike = function(user_id, media_id) {
-//     return user_id in ig.likes(media_id, function(err, result, remaining, limit) {});
-// }
+instagramHandler.getPictures = function(user_id, callback) {
+    ig.user_media_recent(user_id, function(err, medias, pagination, remaining, limit) {
+        callback(medias);
+    });
+}
+
+instagramHandler.checkLike = function(user_id, media_id, callback) {
+    ig.likes(media_id, function(err, result, remaining, limit) {
+        callback(result);
+    });
+}
+
+instagramHandler.test = function(req, res) {
+    instagramHandler.getPictures('self', function(medias) {
+        res.send(medias);
+    });
+}
 //
 // instagramHandler.getPeers = function(user_id) {
 //     var followers = instagramHandler.getFollowers(user_id);

@@ -12,7 +12,9 @@ config.ig.redirectUri = 'http://plslike.me/instagram/callback';
 config.parse.applicationId = 'JbKjS5vCcu4rzuQAEJlXafeBJuA3rhMXq82xiKyN';
 config.parse.javascriptKey = 'PnyvKOrEmngMeKRSKlKNiBxkw0lHeYySp0sgTckJ';
 
-config.clarifai.clientId = 'EbS38UUdufCZkjcnF_rJ7aDuW02m9QGcPdKzqxpO';
-config.clarifai.clientSecret = 'deZx2l5dMWy0nBvYFW2zpSt7kp2cPg-IgBNB2G-9';
+config.clarifai.clientId = 'MjqHosM0psb-PKt3doIBZ2MJajYC2sFm5_771sS0';
+config.clarifai.clientSecret = 'u7eLFPhzLanKPozwSGlRYkgmxw2F4vCO8O7BGR1V';
+config.clarifai.accessToken = 'z3f18UDGWxQujl2DWATPqvtxFra1np';
+
 
 module.exports = config;
