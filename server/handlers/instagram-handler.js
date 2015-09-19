@@ -29,9 +29,11 @@ instagramHandler.userInfo = function(req, res) {
     });
 }
 
-// instagramHandler.getFollowers = function() {
-//     return ig.user_followers('self', function(err, users, pagination, remaining, limit) {});
-// }
+instagramHandler.getFollowers = function(req, res) {
+    return ig.user_followers('self', function(err, users, pagination, remaining, limit) {
+        res.send(users);
+    });
+}
 //
 // instagramHandler.getFollowees = function(user_id) {
 //     return ig.user_follows(user_id, function(err, users, pagination, remaining, limit) {});
