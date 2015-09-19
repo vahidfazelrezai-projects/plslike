@@ -14,8 +14,8 @@ var testHandler = require('../handlers/test-handler');
 router.get('/test', testHandler.test);
 
 // instagram auth flow
-// app.get('/instagram/auth', instagramHandler.auth);
-// app.get('/instagram/callback', instagramHandler.callback);
+app.get('/instagram/auth', instagramHandler.auth);
+app.get('/instagram/callback', instagramHandler.callback);
 
 // views
 router.get('/*', viewHandler.index);

@@ -25,7 +25,7 @@ instagramHandler.callback = function(req, res) {
     }
   });
 };
-//
+
 //
 // instagramHandler.loginUser = function(access, client, secret) {
 //     ig.use({ access_token: access });
