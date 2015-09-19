@@ -23,7 +23,7 @@ instagramHandler.callback = function(req, res) {
   });
 };
 
-instagramHandler.userInfo function(req, res) {
+instagramHandler.userInfo = function(req, res) {
     ig.user('self', function(err, result, remaining, limit) {
         res.send(result);
     });
