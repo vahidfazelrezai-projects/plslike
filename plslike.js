@@ -4,17 +4,12 @@ var fs = require('fs');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var favicon = require('serve-favicon');
-var mongoose = require('mongoose');
 
 // SERVER FILES //
 var index = require('./server/routes/index');
-var configDatabase = require('./server/config/database');
 
 // APP //
 var app = express();
-
-// DATABASE //
-mongoose.connect(configDatabase.uri);
 
 // VIEW ENGINE //
 app.set('view engine', 'html');
