@@ -1,0 +1,29 @@
+{
+  "name": "plslike",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "plslike.me",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vfazel/plslike"
+  },
+  "dependencies": {
+    "angular": "^1.4.3",
+    "angular-route": "^1.4.3",
+    "body-parser": "^1.10.1",
+    "express": "^4.11.0",
+    "mongoose": "^4.0.1",
+    "morgan": "^1.5.1",
+    "serve-favicon": "^2.3.0",
+    "stdio": "^0.2.7"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-sass": "^2.0.4",
+    "nodemon": "^1.4.0"
+  },
+  "scripts": {
+    "start": "nodemon start.js",
+    "dev": "gulp"
+  }
+}
