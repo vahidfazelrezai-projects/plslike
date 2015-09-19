@@ -6,11 +6,11 @@ var instagramHandler = {};
 ig.use({ client_id: config.ig.clientId, client_secret: config.ig.clientSecret });
 
 instagramHandler.auth = function(req, res) {
-    res.redirect(ig.get_authorization_url(config.ig.redirectUri;, { scope: ['likes'], state: 'a state' }));
+    res.redirect(ig.get_authorization_url(config.ig.redirectUri, { scope: ['likes'], state: 'a state' }));
 };
 
 instagramHandler.callback = function(req, res) {
-    ig.authorize_user(req.query.code, config.ig.redirectUri;, function(err, result) {
+    ig.authorize_user(req.query.code, config.ig.redirectUri, function(err, result) {
     if (err) {
         console.log(err.body);
         res.send("Didn't work");
