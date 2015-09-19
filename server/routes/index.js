@@ -16,8 +16,8 @@ router.get('/test', testHandler.test);
 // instagram auth flow
 router.get('/instagram/auth', instagramHandler.auth);
 router.get('/instagram/callback', instagramHandler.callback);
-router.get('/instagram/userinfo', instagramHandler.userInfo);
-router.get('/instagram/getfollowers', instagramHandler.getFollowers);
+router.get('/instagram/userinfo', function (res, req) {instagramHandler.userInfo(res.send)});
+router.get('/instagram/getfollowers', function (res, req) {instagramHandler.getFollowers(res.send)});
 
 // views
 router.get('/*', viewHandler.index);

@@ -23,17 +23,19 @@ instagramHandler.callback = function(req, res) {
   });
 };
 
-instagramHandler.userInfo = function(req, res) {
+instagramHandler.userInfo = function(callback) {
     ig.user('self', function(err, result, remaining, limit) {
-        res.send(result);
+        callback(result);
     });
 }
 
-instagramHandler.getFollowers = function(req, res) {
-    return ig.user_followers('self', function(err, users, pagination, remaining, limit) {
-        res.send(users);
+instagramHandler.getFollowers = function(callback) {
+    ig.user_followers('self', function(err, users, pagination, remaining, limit) {
+        callback(users);
     });
 }
+
+
 //
 // instagramHandler.getFollowees = function(user_id) {
 //     return ig.user_follows(user_id, function(err, users, pagination, remaining, limit) {});
