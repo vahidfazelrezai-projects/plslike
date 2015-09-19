@@ -1,4 +1,7 @@
 config = {};
+config.ig = {};
+config.parse = {};
+config.clarifai = {};
 
 // pls don't steal
 
