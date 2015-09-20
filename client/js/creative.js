@@ -8,17 +8,23 @@ document.getElementById("getStarted").onclick = function () {
     location.href = "instagram/auth";
 };
 
+$(function () {
+    $(":file").change(function () {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = imageIsLoaded;
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+});
+
+function imageIsLoaded(e) {
+    $('#uploadedImage').attr('src', e.target.result);
+};
+
+
 (function($) {
     "use strict"; // Start of use strict
 
-    // Offset for Main Navigation
-    $('#mainNav').affix({
-        offset: {
-            top: 100
-        }
-    })
-
-    // Initialize WOW.js Scrolling Animations
-    new WOW().init();
 
 })(jQuery); // End of use strict
