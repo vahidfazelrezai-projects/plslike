@@ -82,24 +82,23 @@ instagramHandler.test = function (req, res) {
             instagramHandler.getMedias(follows[i], function (medias) {
                 if (medias) {
                     for (var j = 0; j < medias.length; j++) {
-                        var likes = medias[j]['likes'];
-                        var url = medias[j]['image'][]
-                        for (var k = 0; k < likes.length; k++) {
-                            if (likes[k] == user_id) {
-                                pos_urls.push(me)
+                        var likers = medias[j]['likes']['data'];
+                        var url = medias[j]['images']['standard_resolution']['url']
+                        for (var k = 0; k < likers.length; k++) {
+                            if (likers[k] == user_id) {
+                                pos_urls.push(url);
+                            } else {
+                                neg_urls.push(url);
                             }
                         }
-                        res.send(JSON.stringify(medias));
                     }
-                } else {
-                    res.send('no medias :(');
                 }
-            })
+            });
         }
-        res.send({
+        res.send(JSON.stringify({
             'negative': neg_urls,
             'positive': pos_urls
-        });
+        }));
     });
     // instagramHandler.getFollowers('self', function(followers) {
     //     for (i = 0; i < followers.length; i++) {
