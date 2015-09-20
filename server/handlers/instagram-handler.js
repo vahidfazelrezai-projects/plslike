@@ -8,7 +8,7 @@ ig.use({ client_id: config.ig.clientId, client_secret: config.ig.clientSecret })
 
 // redirect to instagram auth endpoint
 instagramHandler.auth = function (req, res) {
-    res.redirect(ig.get_authorization_url(config.ig.redirectUri, { scope: ['likes'], state: 'a state' }));
+    res.redirect(ig.get_authorization_url(config.ig.redirectUri, { scope: ['basic'], state: 'a state' }));
 };
 
 // handle instagram auth callback by using access token
