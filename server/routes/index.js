@@ -20,6 +20,6 @@ router.get('/instagram/callback', instagramHandler.callback);
 // views
 router.get('/', viewHandler.index);
 router.get('/uploadImage', viewHandler.upload);
-
+router.get('/addMedia', viewHandler.addMedia);
 
 module.exports = router;

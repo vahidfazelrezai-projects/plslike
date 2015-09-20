@@ -11,4 +11,8 @@ viewHandler.upload = function (req, res) {
     res.sendFile(path.join(__dirname, '../../client/views/uploadImage.html'));
 }
 
+viewHandler.addMedia = function (req, res) {
+    res.sendFile(path.join(__dirname, '../../client/views/socialMedia.html'));
+}
+
 module.exports = viewHandler;

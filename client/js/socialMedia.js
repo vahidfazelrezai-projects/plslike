@@ -7,8 +7,16 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-document.getElementById("getStarted").onclick = function () {
-    location.href = "instagram/auth";
+document.getElementById("facebookButton").onclick = function () {
+    location.href = "facebook/auth";
+};
+
+document.getElementById("tinderButton").onclick = function() {
+    location.href = "tinder/auth";
+};
+
+document.getElementById("imgurButton").onclick = function() {
+    location.href = "imgur/auth";
 };
 
 (function($) {
