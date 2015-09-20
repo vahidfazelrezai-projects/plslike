@@ -12,7 +12,9 @@
 $(document).ready(function(){
     $("#uploadButton2").hide();
     $("#uploadedImage").hide();
-    $("#analytics").hide();
+    $("#socialMediaAdder").addClass("hidden");
+    $("#analyticsBackground").addClass("hidden");
+    $("#analyticsSpacer").addClass("hidden");
 });
 
 document.getElementById("getStarted").onclick = function () {
@@ -22,10 +24,8 @@ document.getElementById("getStarted").onclick = function () {
 document.getElementById("uploadButton1").onclick = function() {
     $("#fileInput").click();
     $("#uploadedImage").show();
-    //$('#wizard').toggle();
     $("#uploadButton1").hide();
     $("#uploadButton2").show();
-    $("#analytics").show();
 };
 
 document.getElementById("uploadButton2").onclick = function() {
@@ -38,6 +38,9 @@ $(function () {
             var reader = new FileReader();
             reader.onload = imageIsLoaded;
             reader.readAsDataURL(this.files[0]);
+	    $("#analyticsBackground").removeClass("hidden").addClass("visible");
+	    $("#socialMediaAdder").removeClass("hidden").addClass("visible");
+	    $("#analyticsSpacer").removeClass("hidden").addClass("visible");
         }
     });
 });

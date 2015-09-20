@@ -48,16 +48,26 @@
     <div class="header-content">
             <div class="header-content-inner">
                 <div class="row">
-                    <div class="col-md-12">
                         <div class="col-md-6 text-center">
                             <img class="uploadedImage" id="uploadedImage" src="#"/>
                             <a hidden href="#about" id="uploadButton2" class="btn btn-primary btn-xl page-scroll">Upload Your Image</a>
                         </div>
-                        <div class="col-md-6 text-center">
-                            <h3 id="analytics" class="title"><b>Cool Analytics</b></h3>
-                        </div>
+                        <div class="col-md-6">
+                          <div class="analyticsBacking" id="analyticsBackground">
+                            <h3 id="analytics" class="title"><b>Instagram</b></h3>
+			    <h4 id="likes">Predicted Likes: 100 </h4>
+			    <h4 id="probabilities">Average Probability of Liking: 100 Likes / 660 Friends</h4>
+                          </div>
+			  <div id="analyticsSpacer" class="spacer">
+			    <br>
+			    </br>
+			  </div>
+			  <div class="analyticsBacking" id="socialMediaAdder">
+			    <img id="addButton" height="30" width="30" src="../img/t_button.png" />
+                            <h4 class="title">Add Social Media Account</h4>
+			  </div>
+			</div>
                     </div>
-                </div>
                 <div style="height:0px; overflow:hidden">
                     <input type="file" id="fileInput" name="fileInput" />
                 </div>

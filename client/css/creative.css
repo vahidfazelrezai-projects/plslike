@@ -484,3 +484,37 @@ img.uploadedImage{
     max-width: 80%;
     padding: 10px;
 }
+
+div.analyticsBacking {
+    border-radius: 15px 50px;
+    background: #EF502E;
+    padding: 20px;
+    max-width: 80%;
+} 
+
+.hidden>div {
+    display:none;
+}
+
+.visible>div {
+    display:block;
+}
+
+.row{
+    overflow: hidden; 
+}
+
+[class*="col-"]{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+div.spacer{
+    font-size: 0; 
+    height: 15px;
+    line-height: 0;
+}
+
+.analyticsBacking img {
+    float: left;
+}
