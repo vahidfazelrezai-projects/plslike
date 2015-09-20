@@ -36,14 +36,17 @@ instagramHandler.userInfo = function(user_id, callback) {
 // run callback on list of users (followers) for user_id (or 'self')
 instagramHandler.getFollowers = function(user_id, callback) {
     ig.user_followers(user_id, function(err, users, pagination, remaining, limit) {
-        callback(users.map(function (x) { return x['id'] }));
+        user_ids = users.map(function (x) {
+            return x['id'];
+        });
+        callback(user_ids);
     });
 }
 
 // run callback on list of users (follows) for user_id (or 'self')
 instagramHandler.getFollows = function(user_id, callback) {
     ig.user_follows(user_id, function(err, users, pagination, remaining, limit) {
-        callback(users.map(function (x) { return x['id'] }));
+        callback(users);
     });
 }
 
@@ -55,14 +58,17 @@ instagramHandler.getPictures = function(user_id, callback) {
 
 instagramHandler.test = function(req, res) {
     instagramHandler.getFollowers('self', function(followers) {
-        for (i = 0; i < followers.length; i++) {
-            follower = followers[i];
-            console.log(follower);
-            instagramHandler.getPictures(follower, function(media) {
-                res.send(media);
-            })
-        }
+        res.send(followers);
     });
+    // instagramHandler.getFollowers('self', function(followers) {
+    //     for (i = 0; i < followers.length; i++) {
+    //         follower = followers[i];
+    //         console.log(follower);
+    //         instagramHandler.getPictures(follower, function(media) {
+    //             res.send(media);
+    //         })
+    //     }
+    // });
 }
 //
 // instagramHandler.getPeers = function(user_id) {
