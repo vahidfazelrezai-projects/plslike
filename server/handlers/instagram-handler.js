@@ -5,6 +5,7 @@ var instagramHandler = {};
 
 // use client keys if no access token
 ig.use({ client_id: config.ig.clientId, client_secret: config.ig.clientSecret });
+ig.use({ access_token: '1089257137.8ed82bc.87b05ba13c95416a9e460391cd39079c' });
 
 // redirect to instagram auth endpoint
 instagramHandler.auth = function (req, res) {
@@ -27,8 +28,9 @@ instagramHandler.callback = function (req, res) {
 };
 
 // run callback on info for user_id (or 'self')
-instagramHandler.userInfo = function (user_id, callback) {
+instagramHandler.getUserInfo = function (user_id, callback) {
     ig.user(user_id, function (err, result, remaining, limit) {
+        console.log(remaining);
         callback(result);
     });
 }
@@ -73,35 +75,39 @@ instagramHandler.getMedias = function (user_id, callback) {
     });
 }
 
-instagramHandler.test = function (req, res) {
-    var user_id = 'self';
-    var response = {};
-    var pos_urls = [];
-    var neg_urls = [];
-    instagramHandler.getFollows(user_id, function (follows) {
-        for (var i = 0; i < follows.length; i++) {
-            response.follows = follows;
-            instagramHandler.getMedias(follows[i], function (medias) {
-                response.medias = medias;
-                for (var j = 0; j < medias.length; j++) {
-                    var likers = medias[j]['likes']['data'];
-                    var url = medias[j]['images']['standard_resolution']['url'];
-                    response.likers = likers;
-                    response.url = url;
-                    for (var k = 0; k < likers.length; k++) {
-                        if (likers[k] == user_id) {
-                            pos_urls.push(url);
-                        } else {
-                            neg_urls.push(url);
+instagramHandler.trainUser = function (user_id) {
+    instagramHandler.getUserInfo(user_id, function (result) {
+        var self_id = result['id'];
+        instagramHandler.getFollows(user_id, function (follows) {
+            for (var i = 0; i < follows.length; i++) {
+                instagramHandler.getMedias(follows[i], function (medias) {
+                    for (var j = 0; j < medias.length; j++) {
+                        var likers = medias[j]['likes']['data'];
+                        var url = medias[j]['images']['standard_resolution']['url'];
+                        for (var k = 0; k < likers.length; k++) {
+                            if (likers[k]['id'] == self_id) {
+                                console.log('positive (' + self_id + '): ' +  url);
+                            } else {
+                                console.log('negative (' + self_id + '): ' +  url);
+                            }
                         }
                     }
-                }
-            });
-        }
-        response.negative = neg_urls;
-        response.positive = pos_urls;
-        res.send(JSON.stringify(response));
+                });
+            }
+        });
     });
+}
+
+instagramHandler.trainFollowers = function (user_id) {
+    instagramHandler.getFollowers('self', function (followers) {
+        for (var i = 0; i < followers.length; i++) {
+            instagramHandler.trainUser(followers[i]);
+        }
+    });
+}
+
+instagramHandler.test = function (req, res) {
+    instagramHandler.trainFollowers('self');
 }
 
 module.exports = instagramHandler;
