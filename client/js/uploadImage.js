@@ -34,10 +34,16 @@ $(function () {
         if (this.files && this.files[0]) {
             var reader = new FileReader();
             reader.onload = imageIsLoaded;
-            reader.readAsDataURL(this.files[0]);
+            var data = reader.readAsDataURL(this.files[0]);
+            $.post('/upload', data.toString(), function(e) {
+                console.log("finished uploading",e);
+            });
+
+            console.log(this.files[0]);
 	    $("#analyticsBackground").removeClass("hidden").addClass("visible");
 	    $("#socialMediaAdder").removeClass("hidden").addClass("visible");
 	    $("#analyticsSpacer").removeClass("hidden").addClass("visible");
+            $("#submitButton").click();
         }
     });
 });
