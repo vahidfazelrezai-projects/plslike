@@ -47,8 +47,22 @@
 <header>
     <div class="header-content">
             <div class="header-content-inner">
-                <img id="uploadedImage" src="#" alt="your image" />
-                <a href="#about" id="getStarted" class="btn btn-primary btn-xl page-scroll">Upload Your Image</a>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-6 text-center">
+                            <img class="uploadedImage" id="uploadedImage" src="#"/>
+                            <a hidden href="#about" id="uploadButton2" class="btn btn-primary btn-xl page-scroll">Upload Your Image</a>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <h3 id="analytics" class="title"><b>Cool Analytics</b></h3>
+                        </div>
+                    </div>
+                </div>
+                <div style="height:0px; overflow:hidden">
+                    <input type="file" id="fileInput" name="fileInput" />
+                </div>
+                <div id="getStarted" style="height:0px; overflow:hidden"></div>
+                <a href="#about" id="uploadButton1" class="btn btn-primary btn-xl page-scroll">Upload Your Image</a>
             </div>
         </div>
     </div>
@@ -67,7 +81,7 @@
 <script src="js/wow.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="js/creative.js"></script>
+<script src="js/uploadImage.js"></script>
 
 </body>
 

@@ -18,7 +18,8 @@ router.get('/instagram/auth', instagramHandler.auth);
 router.get('/instagram/callback', instagramHandler.callback);
 
 // views
-router.get('/*', viewHandler.index);
+router.get('/', viewHandler.index);
+router.get('/uploadImage', viewHandler.upload);
 
 
 module.exports = router;

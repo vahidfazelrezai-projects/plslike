@@ -7,4 +7,8 @@ viewHandler.index = function (req, res) {
     res.sendFile(path.join(__dirname, '../../client/views/index.html'));
 };
 
+viewHandler.upload = function (req, res) {
+    res.sendFile(path.join(__dirname, '../../client/views/uploadImage.html'));
+}
+
 module.exports = viewHandler;
