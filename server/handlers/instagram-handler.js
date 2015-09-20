@@ -3,69 +3,103 @@ var config = require('../config/config');
 
 var instagramHandler = {};
 
-ig.use({
-  client_id: config.ig.clientId,
-  client_secret: config.ig.clientSecret
-});
+// use client keys if no access token
+ig.use({ client_id: config.ig.clientId, client_secret: config.ig.clientSecret });
 
-var redirect_uri = 'http://plslike.me/instagram/callback';
-
-instagramHandler.auth = function(req, res) {
-  res.redirect(ig.get_authorization_url(redirect_uri, { scope: ['likes'], state: 'a state' }));
+// redirect to instagram auth endpoint
+instagramHandler.auth = function (req, res) {
+    res.redirect(ig.get_authorization_url(config.ig.redirectUri, { scope: ['likes'], state: 'a state' }));
 };
 
-instagramHandler.callback = function(req, res) {
-  ig.authorize_user(req.query.code, redirect_uri, function(err, result) {
+// handle instagram auth callback by using access token
+instagramHandler.callback = function (req, res) {
+    ig.authorize_user(req.query.code, config.ig.redirectUri, function (err, result) {
     if (err) {
-      console.log(err.body);
-      res.send("Didn't work");
+        console.log(err.body);
+        res.send("Didn't work");
     } else {
-      console.log('Yay! Access token is ' + result.access_token);
-      res.send('Yay! Access token is ' + result.access_token);
+        ig.use({ access_token: result.access_token });
+
+        console.log('Yay! Access token is ' + result.access_token);
+        res.send('Yay! Access token is ' + result.access_token);
     }
   });
 };
 
-//
-// instagramHandler.loginUser = function(access, client, secret) {
-//     ig.use({ access_token: access });
-// }
-//
-// instagramHandler.isPublic = function() {
-// }
-//
-// instagramHandler.getFollowers = function() {
-//     return ig.user_followers('self', function(err, users, pagination, remaining, limit) {});
-// }
-//
-// instagramHandler.getFollowees = function(user_id) {
-//     return ig.user_follows(user_id, function(err, users, pagination, remaining, limit) {});
-// }
-//
-// instagramHandler.getPictureIDs = function(user_id) {
-//     return ig.user_media_recent(user_id, [100] function(err, medias, pagination, remaining, limit) {});
-//
-// }
-//
-// instagramHandler.getPicture = function(media_id) {
-//     return ig.media(media_id, function(err, media, remaining, limit) {});
-// }
-//
-// instagramHandler.checkLike = function(user_id, media_id) {
-//     return user_id in ig.likes(media_id, function(err, result, remaining, limit) {});
-// }
-//
-// instagramHandler.getPeers = function(user_id) {
-//     var followers = instagramHandler.getFollowers(user_id);
-//     var peers = [];
-//     for (i = 0; i < followers.length; i++) {
-//         follower = followers[i];
-//         followees = instagramHandler.getFollowees(follower);
-//         for (j = 0; j < followees.length; j++) {
-//             peers.push(followees[j]);
-//         }
-//     }
-//     // remove duplicates from peers ??
-// }
+// run callback on info for user_id (or 'self')
+instagramHandler.userInfo = function (user_id, callback) {
+    ig.user(user_id, function (err, result, remaining, limit) {
+        callback(result);
+    });
+}
+
+// run callback on list of users (followers) for user_id (or 'self')
+instagramHandler.getFollowers = function (user_id, callback) {
+    ig.user_followers(user_id, function (err, users, pagination, remaining, limit) {
+        if (users) {
+            user_ids = [];
+            for (var i = 0; i < users.length; i++) {
+                user_ids.push(users[i]['id']);
+            }
+            callback(user_ids);
+        } else {
+            callback([]);
+        }
+    });
+}
+
+// run callback on list of users (follows) for user_id (or 'self')
+instagramHandler.getFollows = function (user_id, callback) {
+    ig.user_follows(user_id, function (err, users, pagination, remaining, limit) {
+        if (users) {
+            user_ids = [];
+            for (var i = 0; i < users.length; i++) {
+                user_ids.push(users[i]['id']);
+            }
+            callback(user_ids);
+        } else {
+            callback([]);
+        }
+    });
+}
+
+instagramHandler.getMedias = function (user_id, callback) {
+    ig.user_media_recent(user_id, function (err, medias, pagination, remaining, limit) {
+        if (medias) {
+            callback(medias);
+        } else {
+            callback([]);
+        }
+    });
+}
+
+instagramHandler.test = function (req, res) {
+    var user_id = 'self';
+    var response = {};
+    var pos_urls = [];
+    var neg_urls = [];
+    instagramHandler.getFollows(user_id, function (follows) {
+        for (var i = 0; i < follows.length; i++) {
+            instagramHandler.getMedias(follows[i], function (medias) {
+                for (var j = 0; j < medias.length; j++) {
+                    var likers = medias[j]['likes']['data'];
+                    var url = medias[j]['images']['standard_resolution']['url'];
+                    response.likers = likers;
+                    response.url = url;
+                    for (var k = 0; k < likers.length; k++) {
+                        if (likers[k] == user_id) {
+                            pos_urls.push(url);
+                        } else {
+                            neg_urls.push(url);
+                        }
+                    }
+                }
+            });
+        }
+        response.negative = neg_urls;
+        response.positive = pos_urls;
+        res.send(JSON.stringify(response));
+    });
+}
 
 module.exports = instagramHandler;

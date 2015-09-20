@@ -12,6 +12,8 @@ var testHandler = require('../handlers/test-handler');
 
 // test
 router.get('/test', testHandler.test);
+router.get('/clarifaitest', clarifaiHandler.test);
+router.get('/instagramtest', instagramHandler.test);
 
 // instagram auth flow
 router.get('/instagram/auth', instagramHandler.auth);

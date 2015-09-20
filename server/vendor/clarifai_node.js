@@ -19,7 +19,6 @@ var tagPath = "/v1/tag/";
 var requestTokenPath = "/v1/token";
 var feedbackPath = "/v1/feedback";
 
-
 /* handle the common responses to HTTP status codes
  * 200 and 401 Unauthorized are passed to the httpSuccessHandler
  * 429 throttles the client
