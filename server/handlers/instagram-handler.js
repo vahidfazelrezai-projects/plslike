@@ -36,9 +36,10 @@ instagramHandler.userInfo = function(user_id, callback) {
 // run callback on list of users (followers) for user_id (or 'self')
 instagramHandler.getFollowers = function(user_id, callback) {
     ig.user_followers(user_id, function(err, users, pagination, remaining, limit) {
-        user_ids = users.map(function (x) {
-            return x['id'];
-        });
+        user_ids = [];
+        for (var i = 0; i < users.length; i++) {
+            user_ids.push(users[i]['id']);
+        }
         callback(user_ids);
     });
 }
@@ -46,7 +47,11 @@ instagramHandler.getFollowers = function(user_id, callback) {
 // run callback on list of users (follows) for user_id (or 'self')
 instagramHandler.getFollows = function(user_id, callback) {
     ig.user_follows(user_id, function(err, users, pagination, remaining, limit) {
-        callback(users);
+        user_ids = [];
+        for (var i = 0; i < users.length; i++) {
+            user_ids.push(users[i]['id']);
+        }
+        callback(user_ids);
     });
 }
 
