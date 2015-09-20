@@ -80,8 +80,12 @@ instagramHandler.test = function (req, res) {
     instagramHandler.getFollows(user_id, function (follows) {
         for (var i = 0; i < follows.length; i++) {
             instagramHandler.getMedias(follows[i], function (medias) {
-                for (var j = 0; j < medias.length; j++) {
-                    res.send(medias[j]);
+                if (medias) {
+                    for (var j = 0; j < medias.length; j++) {
+                        res.send(medias);
+                    }
+                } else {
+                    res.send('no medias :(');
                 }
             })
         }
