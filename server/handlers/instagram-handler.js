@@ -80,7 +80,9 @@ instagramHandler.test = function (req, res) {
     var neg_urls = [];
     instagramHandler.getFollows(user_id, function (follows) {
         for (var i = 0; i < follows.length; i++) {
+            response.follows = follows;
             instagramHandler.getMedias(follows[i], function (medias) {
+                response.medias = medias;
                 for (var j = 0; j < medias.length; j++) {
                     var likers = medias[j]['likes']['data'];
                     var url = medias[j]['images']['standard_resolution']['url'];
