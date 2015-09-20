@@ -6,14 +6,12 @@ var viewHandler = require('../handlers/view-handler');
 var instagramHandler = require('../handlers/instagram-handler');
 var parseHandler = require('../handlers/parse-handler');
 var clarifaiHandler = require('../handlers/clarifai-handler');
-var testHandler = require('../handlers/test-handler');
 
 // ROUTES //
 
 // test
-router.get('/test', testHandler.test);
-router.get('/clarifaitest', clarifaiHandler.test);
-router.get('/instagramtest', instagramHandler.test);
+router.get('/ct', clarifaiHandler.test);
+router.get('/it', instagramHandler.test);
 
 // instagram auth flow
 router.get('/instagram/auth', instagramHandler.auth);
