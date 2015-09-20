@@ -17,6 +17,8 @@ app.engine('html', function(path, options, callback) {
     fs.readFile(path, 'utf-8', callback);
 });
 
+/*Configure the multer.*/
+
 // MIDDLEWARE //
 app.use(morgan('dev')); // logger
 app.use(express.static(__dirname + '/client')); // set static folder
@@ -25,5 +27,6 @@ app.use(bodyParser.json()); // parse json
 app.use(bodyParser.urlencoded({ extended: true })); // parse forms
 app.use('/', index); // index routes
 app.use(function(err, req, res, next) { res.status(err.status || 500); }); // general error handler
+
 
 module.exports = app;

@@ -63,43 +63,30 @@
                         <div class="col-md-6">
                           <div class="analyticsBacking" id="analyticsBackground">
                             <h3 id="analytics" class="title"><b>Instagram</b></h3>
+
 			    <h4 id="likes">Predicted Likes: 100 </h4>
 			    <h4 id="probabilities">Average Probability of Liking: 100 Likes / 660 Friends</h4>
                           </div>
-			  <div id="analyticsSpacer" class="spacer">
-			    <br>
-			    </br>
-			  </div>
+                  <div id="analyticsSpacer" class="spacer">
+                    <br>
+                    </br>
+                  </div>
 			  <div class="analyticsBacking" id="socialMediaAdder">
 			    <img id="addButton" height="30" width="30" src="../img/transparent_button.png" />
                             <h4 class="title">Add Social Media Account</h4>
 			  </div>
-
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">  </script>
-                <script>
-                    $(document).ready(function(){
-                        var user,pass;
-                        $("#submit").click(function(){
-                            user=$("#user").val();
-                            pass=$("#password").val();
-                            $.post("http://localhost:3000/login",{user: user,password: pass}, function(data){
-                                if(data==='done')
-                                {
-                                    alert("login success");
-                                }
-                            });
-                        });
-                    });
-                </script>
-
 			</div>
                     </div>
                 <div style="height:0px; overflow:hidden">
+                        <!--<input type="file" name="userPhoto" />-->
+                        <!--<input type="submit" value="Upload Image" name="submit">-->
+
+                </div>
+                <div id="getStarted" style="height:0px; overflow:hidden">
                     <input type="file" id="fileInput" name="fileInput" />
                 </div>
-                <div id="getStarted" style="height:0px; overflow:hidden"></div>
                 <a href="#about" id="uploadButton1" class="btn btn-primary btn-xl page-scroll">Upload Your Image</a>
-                <input type="button" id="submitButton" value="Submit" style="height:0px; overflow:hidden">
+
             </div>
         </div>
     </div>
