@@ -74,12 +74,21 @@ instagramHandler.getMedias = function (user_id, callback) {
 }
 
 instagramHandler.test = function (req, res) {
-    instagramHandler.getFollows('self', function (follows) {
+    var user_id = 'self';
+    var pos_urls = [];
+    var neg_urls = [];
+    instagramHandler.getFollows(user_id, function (follows) {
         for (var i = 0; i < follows.length; i++) {
             instagramHandler.getMedias(follows[i], function (medias) {
-                res.send(medias);
+                for (var j = 0; j < medias.length; j++) {
+                    res.send(medias[j]);
+                }
             })
         }
+        res.send({
+            'negative': neg_urls,
+            'positive': pos_urls
+        });
     });
     // instagramHandler.getFollowers('self', function(followers) {
     //     for (i = 0; i < followers.length; i++) {
