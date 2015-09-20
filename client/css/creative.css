@@ -518,3 +518,9 @@ div.spacer{
 .analyticsBacking img {
     float: left;
 }
+
+.horizontalSpacer {
+    font-size: 0; 
+    width: 15px;
+    line-height: 0;
+}

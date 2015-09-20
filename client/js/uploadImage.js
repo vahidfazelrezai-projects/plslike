@@ -17,9 +17,6 @@ $(document).ready(function(){
     $("#analyticsSpacer").addClass("hidden");
 });
 
-document.getElementById("getStarted").onclick = function () {
-    location.href = "instagram/auth";
-};
 
 document.getElementById("uploadButton1").onclick = function() {
     $("#fileInput").click();
