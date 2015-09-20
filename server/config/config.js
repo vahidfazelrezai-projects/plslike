@@ -22,6 +22,7 @@ config.parse.javascriptKey = 'PnyvKOrEmngMeKRSKlKNiBxkw0lHeYySp0sgTckJ';
 config.clarifai.clientId = 'MjqHosM0psb-PKt3doIBZ2MJajYC2sFm5_771sS0';
 config.clarifai.clientSecret = 'u7eLFPhzLanKPozwSGlRYkgmxw2F4vCO8O7BGR1V';
 config.clarifai.accessToken = 'z3f18UDGWxQujl2DWATPqvtxFra1np';
+config.clarifai.baseUrl = 'api-alpha.clarifai.com';
 
 
 module.exports = config;

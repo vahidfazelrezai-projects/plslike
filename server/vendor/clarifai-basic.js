@@ -1,3 +1,5 @@
+(function(){
+
 function Clarifai(options){
     var validate = this.validateConstructor(options);
     if(validate === false){
@@ -317,7 +319,15 @@ Clarifai.prototype.log = function(obj){
     }
 }
 
-module.exports = Clarifai;
+// check if we've got require
+if(typeof module !== "undefined"){
+    module.exports = Clarifai;
+}
+else{
+    window.Clarifai = Clarifai;
+}
+
+}()); // end wrapper
 
 
 /*
