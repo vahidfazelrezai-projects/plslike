@@ -82,7 +82,14 @@ instagramHandler.test = function (req, res) {
             instagramHandler.getMedias(follows[i], function (medias) {
                 if (medias) {
                     for (var j = 0; j < medias.length; j++) {
-                        res.send(medias);
+                        var likes = medias[j]['likes'];
+                        var url = medias[j]['image'][]
+                        for (var k = 0; k < likes.length; k++) {
+                            if (likes[k] == user_id) {
+                                pos_urls.push(me)
+                            }
+                        }
+                        res.send(JSON.stringify(medias));
                     }
                 } else {
                     res.send('no medias :(');
