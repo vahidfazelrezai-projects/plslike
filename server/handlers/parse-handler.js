@@ -1,6 +1,5 @@
 var Parse = require('parse/node').Parse;
 var config = require('../config/config');
-var $ = require('jquery');
 
 // usage
 

@@ -479,3 +479,8 @@ body {
 img.plslike {
     max-width: 70%;
 }
+
+img.uploadedImage{
+    max-width: 80%;
+    padding: 10px;
+}
