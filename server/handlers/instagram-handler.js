@@ -1,5 +1,6 @@
 var ig = require('instagram-node').instagram();
 var config = require('../config/config');
+var clarifaiHandler = require('./clarifai-handler');
 
 var instagramHandler = {};
 
@@ -30,7 +31,6 @@ instagramHandler.callback = function (req, res) {
 // run callback on info for user_id (or 'self')
 instagramHandler.getUserInfo = function (user_id, callback) {
     ig.user(user_id, function (err, result, remaining, limit) {
-        console.log(remaining);
         callback(result);
     });
 }
@@ -86,8 +86,10 @@ instagramHandler.trainUser = function (user_id) {
                         var url = medias[j]['images']['standard_resolution']['url'];
                         for (var k = 0; k < likers.length; k++) {
                             if (likers[k]['id'] == self_id) {
+                                clarifaiHandler.positive(url, self_id, function() {});
                                 console.log('positive (' + self_id + '): ' +  url);
                             } else {
+                                clarifaiHandler.negative(url, self_id, function() {});
                                 console.log('negative (' + self_id + '): ' +  url);
                             }
                         }
@@ -107,7 +109,12 @@ instagramHandler.trainFollowers = function (user_id) {
 }
 
 instagramHandler.test = function (req, res) {
-    instagramHandler.trainFollowers('self');
+    // instagramHandler.trainFollowers('self');
+    clarifaiHandler.train('40423171', function() {
+        clarifaiHandler.predict('http://vahid.io/assets/img/cover.jpg', '40423171', function (score) {
+            res.send(score.toString());
+        });
+    });
 }
 
 module.exports = instagramHandler;
