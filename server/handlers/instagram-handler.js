@@ -7,13 +7,13 @@ var instagramHandler = {};
 ig.use({ client_id: config.ig.clientId, client_secret: config.ig.clientSecret });
 
 // redirect to instagram auth endpoint
-instagramHandler.auth = function(req, res) {
+instagramHandler.auth = function (req, res) {
     res.redirect(ig.get_authorization_url(config.ig.redirectUri, { scope: ['likes'], state: 'a state' }));
 };
 
 // handle instagram auth callback by using access token
-instagramHandler.callback = function(req, res) {
-    ig.authorize_user(req.query.code, config.ig.redirectUri, function(err, result) {
+instagramHandler.callback = function (req, res) {
+    ig.authorize_user(req.query.code, config.ig.redirectUri, function (err, result) {
     if (err) {
         console.log(err.body);
         res.send("Didn't work");
@@ -27,43 +27,59 @@ instagramHandler.callback = function(req, res) {
 };
 
 // run callback on info for user_id (or 'self')
-instagramHandler.userInfo = function(user_id, callback) {
-    ig.user(user_id, function(err, result, remaining, limit) {
+instagramHandler.userInfo = function (user_id, callback) {
+    ig.user(user_id, function (err, result, remaining, limit) {
         callback(result);
     });
 }
 
 // run callback on list of users (followers) for user_id (or 'self')
-instagramHandler.getFollowers = function(user_id, callback) {
-    ig.user_followers(user_id, function(err, users, pagination, remaining, limit) {
-        user_ids = [];
-        for (var i = 0; i < users.length; i++) {
-            user_ids.push(users[i]['id']);
+instagramHandler.getFollowers = function (user_id, callback) {
+    ig.user_followers(user_id, function (err, users, pagination, remaining, limit) {
+        if (users) {
+            user_ids = [];
+            for (var i = 0; i < users.length; i++) {
+                user_ids.push(users[i]['id']);
+            }
+            callback(user_ids);
+        } else {
+            callback([]);
         }
-        callback(user_ids);
     });
 }
 
 // run callback on list of users (follows) for user_id (or 'self')
-instagramHandler.getFollows = function(user_id, callback) {
-    ig.user_follows(user_id, function(err, users, pagination, remaining, limit) {
-        user_ids = [];
-        for (var i = 0; i < users.length; i++) {
-            user_ids.push(users[i]['id']);
+instagramHandler.getFollows = function (user_id, callback) {
+    ig.user_follows(user_id, function (err, users, pagination, remaining, limit) {
+        if (users) {
+            user_ids = [];
+            for (var i = 0; i < users.length; i++) {
+                user_ids.push(users[i]['id']);
+            }
+            callback(user_ids);
+        } else {
+            callback([]);
         }
-        callback(user_ids);
     });
 }
 
-instagramHandler.getPictures = function(user_id, callback) {
-    ig.user_media_recent(user_id, function(err, medias, pagination, remaining, limit) {
-        callback(medias);
+instagramHandler.getMedias = function (user_id, callback) {
+    ig.user_media_recent(user_id, function (err, medias, pagination, remaining, limit) {
+        if (medias) {
+            callback(medias);
+        } else {
+            callback([]);
+        }
     });
 }
 
-instagramHandler.test = function(req, res) {
-    instagramHandler.getFollowers('self', function(followers) {
-        res.send(followers);
+instagramHandler.test = function (req, res) {
+    instagramHandler.getFollows('self', function (follows) {
+        for (var i = 0; i < follows.length; i++) {
+            instagramHandler.getMedias(follows[i], function (medias) {
+                res.send(medias);
+            })
+        }
     });
     // instagramHandler.getFollowers('self', function(followers) {
     //     for (i = 0; i < followers.length; i++) {
@@ -75,18 +91,5 @@ instagramHandler.test = function(req, res) {
     //     }
     // });
 }
-//
-// instagramHandler.getPeers = function(user_id) {
-//     var followers = instagramHandler.getFollowers(user_id);
-//     var peers = [];
-//     for (i = 0; i < followers.length; i++) {
-//         follower = followers[i];
-//         followees = instagramHandler.getFollowees(follower);
-//         for (j = 0; j < followees.length; j++) {
-//             peers.push(followees[j]);
-//         }
-//     }
-//     // remove duplicates from peers ??
-// }
 
 module.exports = instagramHandler;
